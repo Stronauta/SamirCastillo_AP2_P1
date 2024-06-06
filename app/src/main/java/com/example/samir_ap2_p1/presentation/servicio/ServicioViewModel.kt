@@ -1,8 +1,7 @@
-package com.example.samir_ap2_p1.presentation
+package com.example.samir_ap2_p1.presentation.servicio
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.samir_ap2_p1.data.local.entities.ServiciosEntity
 import com.example.samir_ap2_p1.data.repository.ServicoRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -61,6 +60,45 @@ class ServicioViewModel(
         }
     }
 
+    fun onDescripcionChanged(descripcion: String) {
+        val descripcionError: String? = when {
+            descripcion.isEmpty() -> "Campo Obligatorio"
+            else -> null
+        }
+        if (!descripcion.startsWith(" ")){
+            uiState.update {
+                it.copy(
+                    descripcion = descripcion,
+                    isDescripcionError = descripcionError
+                )
+            }
+        }
+    }
+
+    fun onPrecioChanged(precioStr: String) {
+        val regex = Regex("[0-9]{0,7}\\.?[0-9]{0,2}")
+        if (precioStr.matches(regex)) {
+            val total = precioStr.toDoubleOrNull() ?: 0.0
+            uiState.update {
+                it.copy(
+                    precio = total,
+                    isPrecioError = null
+                )
+            }
+        }
+    }
+
+    fun validate(): Boolean{
+        val descripcionEmpty = uiState.value.descripcion.isEmpty()
+        val precioEmpty = ((uiState.value.precio ?: 0.0) <= 0.0)
+        if(descripcionEmpty){
+            uiState.update { it.copy(isDescripcionError = "Campo Obligatorio.") }
+        }
+        if(precioEmpty){
+            uiState.update { it.copy(isPrecioError = "Precio debe ser mayor que 0.0") }
+        }
+        return !descripcionEmpty && !precioEmpty
+    }
 
 }
 
@@ -82,84 +120,6 @@ fun ServicioUiState.toEntity() = ServiciosEntity(
 /*
 
 
-fun saveArticulo() {
-    viewModelScope.launch {
-        repository.saveArticulo(uiState.value.toEntity())
-        newArticulo()
-    }
-}
-
-fun deleteArticulo() {
-    viewModelScope.launch {
-        repository.deleteArticulo(uiState.value.toEntity())
-    }
-}
-
-fun newArticulo() {
-    viewModelScope.launch {
-        uiState.value = ArticuloUIState()
-    }
-}
-
-fun onDescripcionChanged(descripcion: String) {
-    val descripcionError: String? = when {
-        descripcion.isEmpty() -> "Campo Obligatorio"
-        descripcionExist(descripcion, uiState.value.articuloId) -> "Descripcion Existente"
-        else -> null
-    }
-    if (!descripcion.startsWith(" ")){
-        uiState.update {
-            it.copy(
-                descripcion = descripcion,
-                descripcionError = descripcionError
-            )
-        }
-    }
-}
-
-fun onCostoChanged(costoStr: String){
-    val regex = Regex("[0-9]{0,7}\\.?[0-9]{0,2}")
-    if (costoStr.matches(regex)) {
-        val costo = costoStr.toDoubleOrNull() ?: 0.0
-        uiState.update {
-            it.copy(
-                costo = costo,
-                costoError = null
-            )
-        }
-        getPrecio()
-    }
-}
-
-fun onGananciaChanged(gananciaStr: String){
-    val regex = Regex("[0-9]{0,7}\\.?[0-9]{0,2}")
-    if (gananciaStr.matches(regex)) {
-        val ganancia = gananciaStr.toDoubleOrNull() ?: 0.0
-        uiState.update {
-            it.copy(
-                ganancia = ganancia
-            )
-        }
-    }
-    getPrecio()
-}
-fun onPrecioChanged(precioStr: String){
-    val precio = precioStr.toDoubleOrNull() ?: 0.0
-    uiState.update {
-        it.copy(
-            precio = precio,
-        )
-    }
-}
-private fun getPrecio() {
-    val precio = uiState.value.costo?.plus((uiState.value.costo ?: 0.0) * ((uiState.value.ganancia ?: 0.0)/100))
-    uiState.update {
-        it.copy(
-            precio = precio
-        )
-    }
-}
-
 fun validation(): Boolean {
     val descripcionEmpty = uiState.value.descripcion.isEmpty()
     val descripcionRepeated = descripcionExist(uiState.value.descripcion, uiState.value.articuloId)
@@ -180,6 +140,6 @@ fun validation(): Boolean {
     return !descripcionEmpty && !descripcionRepeated && !costoEmpty && !precioEmpty
 }
 
-private fun descripcionExist(descripcion: String, id: Int?): Boolean {
-    return articulos.value.any { it.descripcion?.replace(" ", "")?.uppercase() == descripcion.replace(" ", "").uppercase() && it.articuloId != id }
+private fun descripcionExist(descripcion: String, servicioId: Int?): Boolean {
+    return articulos.value.any { it.descripcion?.replace(" ", "")?.uppercase() == descripcion.replace(" ", "").uppercase() && it.articuloId != servicioId }
 }*/

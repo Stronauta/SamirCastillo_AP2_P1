@@ -10,12 +10,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room
+import com.example.samir_ap2_p1.data.local.database.ServicioDb
 import com.example.samir_ap2_p1.presentation.navigation.Parcial1NavHost
 import com.example.samir_ap2_p1.ui.theme.Samir_AP2_P1Theme
 
 class MainActivity : ComponentActivity() {
+    private lateinit var ServicioDb: ServicioDb
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        ServicioDb = Room.databaseBuilder(
+            this,
+            ServicioDb::class.java,
+            "Servicio.db"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+
         enableEdgeToEdge()
         setContent {
             Samir_AP2_P1Theme {
@@ -27,9 +40,10 @@ class MainActivity : ComponentActivity() {
                     }
                     val navHost = rememberNavController()
 
-                    Parcial1NavHost(
+   /*                 Parcial1NavHost(
                         navHostController = navHost,
-                    )
+                        repository = ServicioDb.ServiciosDao
+                    )*/
                 }
             }
         }
