@@ -38,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -149,8 +150,7 @@ fun ServiciosScreenBody(
                         label = { Text(text = "Precio") },
                         value = uiState.precio.toString().replace("null", ""),
                         onValueChange = onPrecioChanged,
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-                        readOnly = true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
                         placeholder = { Text(text = "0.0") },
                         isError = uiState.isPrecioError != null,
                         trailingIcon = {

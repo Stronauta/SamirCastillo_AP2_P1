@@ -27,16 +27,16 @@ fun Parcial1NavHost(
                     ServicioViewModel(repository, 0)
                 },
                 onServicioClick = {
-                    navHostController.navigate(Screen.RegistroServicio(it.servicioId ?: 0))
+                    navHostController.navigate(Screen.Servicio(it.servicioId ?: 0))
                 },
                 onAddServicio = {
-                    navHostController.navigate(Screen.RegistroServicio(0))
+                    navHostController.navigate(Screen.Servicio(0))
                 }
             )
         }
 
-        composable<Screen.RegistroServicio>{
-            val args = it.toRoute<Screen.RegistroServicio>()
+        composable<Screen.Servicio>{
+            val args = it.toRoute<Screen.Servicio>()
             ServiciosScreen(
                 viewModel = viewModel {
                     ServicioViewModel(repository, args.servicioId)

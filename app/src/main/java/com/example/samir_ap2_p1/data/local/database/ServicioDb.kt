@@ -9,7 +9,7 @@ import com.example.samir_ap2_p1.data.local.entities.ServiciosEntity
     entities = [
         ServiciosEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 
