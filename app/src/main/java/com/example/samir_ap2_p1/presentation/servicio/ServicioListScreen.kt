@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -71,6 +72,8 @@ fun ServiciosListBody(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
+                .padding(4.dp)
+
         ) {
             ElevatedCard {
                 Row(
@@ -79,16 +82,21 @@ fun ServiciosListBody(
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
+
                     Text(
                         text = "#",
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
                         modifier = Modifier.weight(0.100f)
                     )
 
+                    Spacer(modifier = Modifier.weight(0.05f))
+
+
                     Text(
                         text = "Descripción",
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
-                        modifier = Modifier.weight(0.25f)
+                        modifier = Modifier.weight(0.40f)
                     )
 
                     Text(
@@ -97,6 +105,12 @@ fun ServiciosListBody(
                         modifier = Modifier.weight(0.40f)
                     )
                 }
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .background(Color.Gray)
+                )
             }
 
             LazyColumn(
@@ -112,8 +126,10 @@ fun ServiciosListBody(
                             .padding(horizontal = 4.dp)
                     ) {
 
+                        Spacer(modifier = Modifier.weight(0.05f))
+
                         Text(
-                            text = servicios.servicioId.toString(),
+                            text =  servicios.servicioId.toString() +"." ,
                             modifier = Modifier.weight(0.100f)
                         )
 
@@ -121,7 +137,7 @@ fun ServiciosListBody(
 
                         Text(
                             text = servicios.descripcion.toString(),
-                            modifier = Modifier.weight(0.25f)
+                            modifier = Modifier.weight(0.40f)
                         )
 
                         Text(

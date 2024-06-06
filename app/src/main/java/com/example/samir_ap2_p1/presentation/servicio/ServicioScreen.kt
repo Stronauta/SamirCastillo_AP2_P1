@@ -203,31 +203,35 @@ fun ServiciosScreenBody(
                                     imageVector = Icons.Default.Add,
                                     contentDescription = "save button"
                                 )
+                                Text(text = "Save")
                             } else {
-                                Text(text = "Actualizar")
+                                Text(text = "update")
                                 Icon(
                                     imageVector = Icons.Default.Edit,
-                                    contentDescription = "save button"
+                                    contentDescription = "update button"
                                 )
                             }
-                            Text(text = "Guardar")
                         }
 
-                        OutlinedButton(
-                            onClick = {
-                                if (uiState.servicioId != null) {
-                                    showDialog = true
-                                } else {
-                                    errorEliminar = true
+                        if (uiState.servicioId != null) {
+                            OutlinedButton(
+                                onClick = {
+                                    if (uiState.servicioId != null) {
+                                        showDialog = true
+                                    } else {
+                                        errorEliminar = true
+                                    }
                                 }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "delete button"
+                                )
+                                Text(text = "Delete")
                             }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "delete button"
-                            )
-                            Text(text = "Eliminar")
                         }
+
+
                         if (elimino) {
                             Toast.makeText(LocalContext.current, "Eliminado Correctamente", Toast.LENGTH_LONG).show()
                             elimino = false
