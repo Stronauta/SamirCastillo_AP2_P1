@@ -2,8 +2,9 @@ package com.example.samir_ap2_p1.data.repository
 
 import com.example.samir_ap2_p1.data.local.dao.ServiciosDao
 import com.example.samir_ap2_p1.data.local.entities.ServiciosEntity
+import javax.inject.Inject
 
-class ServicoRepository(
+class ServicoRepository @Inject constructor(
     private val ServicoDao: ServiciosDao
 ) {
     suspend fun saveServicio(servicio: ServiciosEntity) = ServicoDao.save(servicio)
