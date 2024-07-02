@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.devtools.ksp")
     alias(libs.plugins.kotlinx.serialization)
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -75,6 +76,11 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     //  optional - Kotlin Extensions and Coroutines support for Room
     implementation(libs.androidx.room.ktx)
+
+    //Hilt
+    implementation("com.google.dagger:hilt-android:2.51")
+    ksp ("com.google.dagger:hilt-android-compiler:2.51")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

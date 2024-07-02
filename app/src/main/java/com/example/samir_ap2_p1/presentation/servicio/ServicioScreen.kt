@@ -42,6 +42,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.samir_ap2_p1.R
 import com.example.samir_ap2_p1.ui.theme.Samir_AP2_P1Theme
@@ -49,7 +50,7 @@ import com.example.samir_ap2_p1.ui.theme.Samir_AP2_P1Theme
 
 @Composable
 fun ServiciosScreen(
-    viewModel: ServicioViewModel,
+    viewModel: ServicioViewModel = hiltViewModel(),
     goBackServiciosListScreen: () -> Unit
 ){
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -203,31 +204,35 @@ fun ServiciosScreenBody(
                                     imageVector = Icons.Default.Add,
                                     contentDescription = "save button"
                                 )
+                                Text(text = "Save")
                             } else {
-                                Text(text = "Actualizar")
+                                Text(text = "update")
                                 Icon(
                                     imageVector = Icons.Default.Edit,
-                                    contentDescription = "save button"
+                                    contentDescription = "update button"
                                 )
                             }
-                            Text(text = "Guardar")
                         }
 
-                        OutlinedButton(
-                            onClick = {
-                                if (uiState.servicioId != null) {
-                                    showDialog = true
-                                } else {
-                                    errorEliminar = true
+                        if (uiState.servicioId != null) {
+                            OutlinedButton(
+                                onClick = {
+                                    if (uiState.servicioId != null) {
+                                        showDialog = true
+                                    } else {
+                                        errorEliminar = true
+                                    }
                                 }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "delete button"
+                                )
+                                Text(text = "Delete")
                             }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "delete button"
-                            )
-                            Text(text = "Eliminar")
                         }
+
+
                         if (elimino) {
                             Toast.makeText(LocalContext.current, "Eliminado Correctamente", Toast.LENGTH_LONG).show()
                             elimino = false
@@ -275,7 +280,9 @@ fun ServiciosScreenBody(
             }
         }
     }
+
 }
+
 
 
 @Preview

@@ -4,16 +4,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.samir_ap2_p1.data.local.entities.ServiciosEntity
 import com.example.samir_ap2_p1.data.repository.ServicoRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ServicioViewModel(
+@HiltViewModel
+class ServicioViewModel @Inject constructor(
     private val repository: ServicoRepository,
-    private val servicioId: Int
 ) : ViewModel() {
+
+    private val servicioId: Int = 0
+
 
     var uiState = MutableStateFlow(ServicioUiState())
         private set
